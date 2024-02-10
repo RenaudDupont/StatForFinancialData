@@ -1,9 +1,9 @@
 {
     "id": "80A8FE3F",
-    "path": "C:/Users/14505/Desktop/MATH 60633A tp01/main.R",
+    "path": "~/GitHub/StatForFinancialData/MATH 60633A tp01/main.R",
     "project_path": "main.R",
     "type": "r_source",
-    "hash": "1203482370",
+    "hash": "0",
     "contents": "",
     "dirty": false,
     "created": 1707519248402.0,
@@ -12,15 +12,15 @@
     "properties": {
         "source_window_id": "",
         "Source": "Source",
-        "cursorPosition": "41,0",
-        "scrollLine": "6"
+        "cursorPosition": "42,7",
+        "scrollLine": "0"
     },
     "folds": "",
-    "lastKnownWriteTime": 1707522952,
+    "lastKnownWriteTime": 1707600570,
     "encoding": "UTF-8",
     "collab_server": "",
     "source_window": "",
-    "last_content_update": 1707522952295,
+    "last_content_update": 1707600570347,
     "read_only": false,
     "read_only_alternatives": []
 }
