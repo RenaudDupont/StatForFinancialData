@@ -1,26 +1,26 @@
 {
-    "id": "80A8FE3F",
-    "path": "~/GitHub/StatForFinancialData/MATH 60633A tp01/main.R",
-    "project_path": "main.R",
+    "id": "89B1B0E3",
+    "path": "~/GitHub/StatForFinancialData/MATH 60633A tp01/Tests/Simulation.R",
+    "project_path": "Tests/Simulation.R",
     "type": "r_source",
     "hash": "0",
     "contents": "",
     "dirty": false,
-    "created": 1707519248402.0,
+    "created": 1708101656967.0,
     "source_on_save": false,
-    "relative_order": 4,
+    "relative_order": 5,
     "properties": {
         "source_window_id": "",
         "Source": "Source",
-        "cursorPosition": "42,7",
-        "scrollLine": "0"
+        "cursorPosition": "27,13",
+        "scrollLine": "3"
     },
     "folds": "",
-    "lastKnownWriteTime": 1707600570,
+    "lastKnownWriteTime": 1708102709,
     "encoding": "UTF-8",
     "collab_server": "",
     "source_window": "",
-    "last_content_update": 1707600570347,
+    "last_content_update": 1708102709593,
     "read_only": false,
     "read_only_alternatives": []
 }

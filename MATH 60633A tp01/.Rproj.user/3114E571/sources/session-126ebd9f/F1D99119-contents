@@ -1,5 +1,12 @@
+library("Rsolnp")
+
 store <- new.env()
 store$objective_values <- numeric()
+
+f_ineq_constraint <- function(theta) {
+  # This should return a positive value when the constraint is met
+  return(1 - (theta[2] + theta[3]))
+}
 
 f_forecast_var <- function(y, level) {
   ### Compute the VaR forecast of a GARCH(1,1) model with Normal errors at the desired risk level
@@ -23,14 +30,14 @@ f_forecast_var <- function(y, level) {
   # Stationarity condition
   A      <- 1 - theta0[3] 
   b      <- 1 - theta0[2]
-  UB <- c(Inf, 0.5-1e-6, 0.5-1e-6) 
+  UB <- c(Inf, 1-1e-6, 1-1e-6) 
   
   # Run the optimization
-  opt_res = optim(theta0, f_nll, method = "L-BFGS-B", lower = LB, upper = UB, y = y  )
-  
-  plot(store$objective_values, type = 'l', xlab = "Iteration", ylab = "Objective Function Value",
-       main = "Objective Function Value Over Iterations")
-  
+  opt_res = solnp(par = theta0, fun = function(x) f_nll(x,y),
+                  UB = UB, LB = LB,
+                  ineqfun = f_ineq_constraint, ineqLB = 0, ineqUB = Inf,   
+                  control = list(trace = 0, maxit = 1000, mins = 1e-8, maxtime = 3600) )
+
   theta <- opt_res$par
   
   # Recompute the conditional variance
@@ -54,12 +61,6 @@ f_nll <- function(theta, y) {
   #   y      : [vector] (T x 1) of observations
   #  OUTPUTS
   #   nll    : [scalar] negative log likelihood value
-  
-  if (theta[2] + theta[3] >= 1) {
-    print("non-stationary parameter sets")
-    return(1e6) # Penalize non-stationary parameter sets
-  } 
-  
   T <- length(y)
   
   # Compute the conditional variance of a GARCH(1,1) model
@@ -89,6 +90,7 @@ ComputeHtGarch <- function(theta, y) {
   
   sig2 <- numeric(T + 1)
   sig2[1] <- omega /(1-alpha1-beta1)  # Unconditional variance
+  sig2[1] <- var(y)
   
   for (t in 2:(T + 1)) {
     sig2[t] <- omega + alpha1 * y[t - 1]^2 + beta1 * sig2[t - 1]
