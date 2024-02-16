@@ -88,6 +88,7 @@ ComputeHtGarch <- function(theta, y) {
   beta1 <- theta[3]
   
   sig2 <- numeric(T + 1)
+  
   sig2[1] <- omega /(1-alpha1-beta1)  # Unconditional variance
   sig2[1] <- var(y)
   

@@ -1,0 +1,28 @@
+{
+    "id": "70A0B85E",
+    "path": null,
+    "project_path": null,
+    "type": "object_explorer",
+    "hash": "0",
+    "contents": "",
+    "dirty": false,
+    "created": 1708119080943.0,
+    "source_on_save": false,
+    "relative_order": 6,
+    "properties": {
+        "id": "0781d40f4e534072b0d8a5da62506210",
+        "name": "VaR_forecast_sp500",
+        "title": "VaR_forecast_sp500",
+        "language": "R",
+        "source_window_id": "",
+        "Source": "Source"
+    },
+    "folds": "",
+    "lastKnownWriteTime": 15762877871816760,
+    "encoding": "",
+    "collab_server": "",
+    "source_window": "",
+    "last_content_update": 1708119080943,
+    "read_only": false,
+    "read_only_alternatives": []
+}
