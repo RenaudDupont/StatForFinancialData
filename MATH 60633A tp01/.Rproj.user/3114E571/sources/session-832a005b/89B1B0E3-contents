@@ -3,6 +3,8 @@ library("xts")
 library("PerformanceAnalytics")
 source(here("Code/f_forecast_var.R"))
 source(here("Code/functions.R"))
+source(here("Tests/UGarchLib.R"))
+
 
 f_generate_datas <- function(theta, n)
 {
@@ -27,7 +29,7 @@ f_generate_datas <- function(theta, n)
  
 theta0 <- c(1, 0.1, 0.8)
 
-data = f_generate_datas(theta0, 10000)
+data = f_generate_datas(theta0, 100000)
 
 number_of_bins = round(10 *log(length(data)))
 
@@ -50,3 +52,28 @@ print("VaR from data ")
 quantile(data,0.05)
 print("Var from Garch")
 VaR_forecast_sp500$VaR_Forecast
+VaR_forecast_sp500$GARCH_param
+
+# Monte Carlo for parameters estimation :
+# Number of simulations
+n_sim <- 20
+params <- matrix(0, nrow = n_sim, ncol = 3)
+rugarch <- matrix(0, nrow = n_sim, ncol = 3)
+
+for(i in 1:n_sim) {
+  # Simulate data
+  data <- f_generate_datas(theta0, 100000)
+  # Estimate parameters
+  # Compute VaR forecasat
+  VaR_forecast <- f_forecast_var(data, level = 0.95)
+  # Store the results
+  params[i,] <- VaR_forecast$GARCH_param
+  print(i/n_sim)
+}
+
+mc_param = c(sum(params[,1])/n_sim, sum(params[,2])/n_sim, sum(params[,3])/n_sim)
+mc_param
+
+
+
+

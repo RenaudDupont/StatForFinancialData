@@ -10,7 +10,7 @@ f_test_rugarch <- function(log_returns,level)
                      mean.model = list(armaOrder = c(0,0), include.mean = FALSE),
                      distribution.model = "norm")
   # Fit the GARCH model
-  fit <- ugarchfit(spec = spec, data = log_returns)
+  fit <- ugarchfit(spec = spec, data = log_returns_sp500)
   # Summary of the fitted model
   summary(fit)
   # Extract the conditional variances (sigmas)
