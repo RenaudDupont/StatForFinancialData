@@ -27,9 +27,9 @@ f_generate_datas <- function(theta, n)
   y
 }
  
-theta0 <- c(1, 0.05, 0.9)
+theta0 <- c(1, 0.1, 0.8)
 
-data = f_generate_datas(theta0, 10000)
+data = f_generate_datas(theta0, 100000)
 
 number_of_bins = round(10 *log(length(data)))
 
@@ -54,10 +54,7 @@ print("Var from Garch")
 VaR_forecast_sp500$VaR_Forecast
 VaR_forecast_sp500$GARCH_param
 
-
-
 # Monte Carlo for parameters estimation :
-
 # Number of simulations
 n_sim <- 20
 params <- matrix(0, nrow = n_sim, ncol = 3)

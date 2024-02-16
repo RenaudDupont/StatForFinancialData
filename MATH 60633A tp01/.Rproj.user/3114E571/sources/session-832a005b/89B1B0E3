@@ -3,7 +3,7 @@
     "path": "~/GitHub/StatForFinancialData/MATH 60633A tp01/Tests/Simulation.R",
     "project_path": "Tests/Simulation.R",
     "type": "r_source",
-    "hash": "0",
+    "hash": "3235626066",
     "contents": "",
     "dirty": false,
     "created": 1708101656967.0,
@@ -12,15 +12,15 @@
     "properties": {
         "source_window_id": "",
         "Source": "Source",
-        "cursorPosition": "79,0",
-        "scrollLine": "33"
+        "cursorPosition": "21,30",
+        "scrollLine": "0"
     },
     "folds": "",
-    "lastKnownWriteTime": 1708114084,
+    "lastKnownWriteTime": 1708115055,
     "encoding": "UTF-8",
     "collab_server": "",
     "source_window": "",
-    "last_content_update": 1708114084439,
+    "last_content_update": 1708115055180,
     "read_only": false,
     "read_only_alternatives": []
 }
