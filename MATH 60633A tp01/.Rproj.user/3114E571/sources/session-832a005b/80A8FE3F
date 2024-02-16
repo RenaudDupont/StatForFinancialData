@@ -12,8 +12,13 @@
     "properties": {
         "source_window_id": "",
         "Source": "Source",
+<<<<<<< Updated upstream
         "cursorPosition": "49,18",
         "scrollLine": "3"
+=======
+        "cursorPosition": "65,62",
+        "scrollLine": "30"
+>>>>>>> Stashed changes
     },
     "folds": "",
     "lastKnownWriteTime": 1708114297,
