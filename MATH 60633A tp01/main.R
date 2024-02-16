@@ -3,6 +3,7 @@ library("xts")
 library("PerformanceAnalytics")
 source(here("Code/f_forecast_var.R"))
 source(here("Code/functions.R"))
+source(here("Tests/UGarchLib.R"))
 
 index_prices = get(load(here("Data/indices.rda")))
 start_analysis_date <-"2005-01-01/"
@@ -31,42 +32,28 @@ plot(sqrt(xts_conditional_variances), type="l",xlab = "Garch Standard Deviation"
 
 plot(store$objective_values, type = 'l', xlab = "Iteration", ylab = "Objective Function Value",
      main = "Objective Function Value Over Iterations")
+rugarch_test = f_test_rugarch(log_returns_sp500,0.95)
+cat("VaR and Params from implemented garch:\nVaR:", VaR_forecast_sp500$VaR, "\nParameters:", (VaR_forecast_sp500$GARCH_param), "\n")
+
+
 
 hist(log_returns$SP500, main = "SP500 daily log-returns", col = "blue", breaks = 100)
+abline(v=rugarch_test$VaR, col="blue", lwd=4 ))
 abline(v=VaR_forecast_sp500$VaR_Forecast, col="red", lwd=2 )
 abline(v=quantile(log_returns$SP500,0.05), col="black", lwd=2 )
-legend("topright", legend=c("VaR from Garch", "VaR from data"), col=c("red", "black"), lty=1:1, cex=0.8)
+legend("topright", legend=c("VaR from RuGarch","VaR from Implemented Garch", "VaR from data"), col=c("blue","red", "black"), lty=1:1, cex=0.8)
 
 print("VaR from data SP500")
 quantile(log_returns$SP500,0.05)
 print("Var from Garch")
 VaR_forecast_sp500$VaR_Forecast
+print("VaR from Rugarch")  
+rugarch_test$VaR
 
 
 
-f_test_rugarch <- function(log_returns,level)
-{
-  # Load the rugarch package
-  library(rugarch)
-  #Y is the vector of log-returns
-  # Specify the GARCH(1,1) model with normal distribution for the errors
-  spec <- ugarchspec(variance.model = list(garchOrder = c(1,1)), 
-                     mean.model = list(armaOrder = c(0,0), include.mean = FALSE),
-                     distribution.model = "norm")
-  # Fit the GARCH model
-  fit <- ugarchfit(spec = spec, data = log_returns_sp500)
-  # Summary of the fitted model
-  summary(fit)
-  # Extract the conditional variances (sigmas)
-  sigma_t <- sigma(fit)
-  # Compute the VaR at the desired confidence level, e.g., 95%
-  VaR <- qnorm(1 - level) * tail(sigma_t, 1)
-  
-  cat("VaR and Params from rugarch:\nVaR:", VaR, "\nParameters:", (coef(fit)), "\n")
-  return(list(VaR = VaR, Params = coef(fit), Sigma = sigma_t))
-}
 
-rugarch_test = f_test_rugarch(log_returns_sp500,0.95)
+
 
 
        

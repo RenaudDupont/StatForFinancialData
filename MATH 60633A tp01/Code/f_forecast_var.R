@@ -19,7 +19,6 @@ f_forecast_var <- function(y, level) {
   #   theta : [vector] GARCH parameters
   #  NOTE
   #   o the estimation is done by maximum likelihood
-  
   # Fit a GARCH(1,1) model with Normal errors
   # Starting values and bounds
   anyNA(y)
@@ -35,7 +34,7 @@ f_forecast_var <- function(y, level) {
   # Run the optimization
   opt_res = solnp(par = theta0, fun = function(x) f_nll(x,y),
                   UB = UB, LB = LB,
-                  ineqfun = f_ineq_constraint, ineqLB = 0, ineqUB = Inf,   
+                  ineqfun = f_ineq_constraint, ineqLB = 0, ineqUB = 1,   
                   control = list(trace = 0, maxit = 1000, mins = 1e-8, maxtime = 3600) )
 
   theta <- opt_res$par
