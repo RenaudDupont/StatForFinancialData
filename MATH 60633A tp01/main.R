@@ -125,9 +125,11 @@ dates <- index(log_returns_sp500)[window_size:(window_size + number_of_windows -
 VaR_forecast_sp500_xts <- xts(VaR_forecast_sp500_vector, order.by = dates)
 
 
-# We plot the VaR forecast and the log-returns
+# We plot the VaR forecast and the log-returns and output the graph
 library("quantmod")
-png(here("Plots/VaR_forecast_sp500.png"))
+
+png(here("Outputs/VaR_forecast_sp500.png"))
+
 plot.xts(VaR_forecast_sp500_xts, type = 'l', col = 'blue', xlab = "Window", ylab = "VaR Forecast",
      main = "VaR Forecast for S&P 500")
 
@@ -145,8 +147,6 @@ addLegend("topright", on = 1, col = c("blue", "red"),
 message = paste("The percentage of time that the returns are below the VaR forecast is:", percentageBelowVaR, "%")
 mtext(message, side = 1, line = -2)
 dev.off()
-
-
 
 
 
