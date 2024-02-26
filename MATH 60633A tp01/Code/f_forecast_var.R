@@ -23,7 +23,7 @@ f_forecast_var <- function(y, level) {
   # Starting values and bounds
   anyNA(y)
   
-  theta0 <- c(0.1* var(y), 0.1, 0.8)
+  theta0 <- c(0.1* var(y), 0.1, 0.8) 
   LB     <- c(1e-6, 1e-6, 1e-6)
   
   # Stationarity condition
