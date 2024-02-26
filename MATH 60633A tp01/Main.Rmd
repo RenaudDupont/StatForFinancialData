@@ -25,13 +25,12 @@ Additionally, it sources additional R scripts containing custom functions essent
 - `UGarchLib.R`: Contains functions related to GARCH.
 
 
-```{r libraries, echo=TRUE, results="hide"}
+```{r libraries, echo=TRUE, results="hide", warning=FALSE, message=FALSE}
 library("here")
 library("xts")
 library("PerformanceAnalytics")
 source(here("Code/f_forecast_var.R"))
-source(here("Code/functions.R"))
-source(here("Tests/UGarchLib.R"))
+source(here("Code/UGarchLib.R"))
 ```
 
 ### Data Loading and Filtering
@@ -95,7 +94,7 @@ This code plots the conditional variance as a time series for the S&P 500 index.
 
 #### 3) Estimating the VaR and the parameters using rugarch
 
-```{r var-forecast-rugarch, echo=TRUE}
+```{r var-forecast-rugarch, echo=TRUE, warning=FALSE, message=FALSE}
 rugarch_test = f_test_rugarch(log_returns_sp500,0.95)
 cat("VaR and Params from implemented garch:\nVaR:", VaR_forecast_sp500$VaR, "\nParameters:", 
     (VaR_forecast_sp500$GARCH_param), "\n")

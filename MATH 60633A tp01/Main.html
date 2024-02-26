@@ -381,22 +381,10 @@ VaR.</li>
 return.</li>
 <li><code>UGarchLib.R</code>: Contains functions related to GARCH.</li>
 </ul>
-<pre class="r"><code>library(&quot;here&quot;)</code></pre>
-<pre><code>## here() starts at C:/Users/bouka/Documents/GitHub/StatForFinancialData/MATH 60633A tp01</code></pre>
-<pre class="r"><code>library(&quot;xts&quot;)</code></pre>
-<pre><code>## Loading required package: zoo</code></pre>
-<pre><code>## 
-## Attaching package: &#39;zoo&#39;</code></pre>
-<pre><code>## The following objects are masked from &#39;package:base&#39;:
-## 
-##     as.Date, as.Date.numeric</code></pre>
-<pre class="r"><code>library(&quot;PerformanceAnalytics&quot;)</code></pre>
-<pre><code>## 
-## Attaching package: &#39;PerformanceAnalytics&#39;</code></pre>
-<pre><code>## The following object is masked from &#39;package:graphics&#39;:
-## 
-##     legend</code></pre>
-<pre class="r"><code>source(here(&quot;Code/f_forecast_var.R&quot;))
+<pre class="r"><code>library(&quot;here&quot;)
+library(&quot;xts&quot;)
+library(&quot;PerformanceAnalytics&quot;)
+source(here(&quot;Code/f_forecast_var.R&quot;))
 source(here(&quot;Code/functions.R&quot;))
 source(here(&quot;Tests/UGarchLib.R&quot;))</code></pre>
 </div>
@@ -465,12 +453,6 @@ variance over time.</p>
 <div id="estimating-the-var-and-the-parameters-using-rugarch" class="section level4">
 <h4>3) Estimating the VaR and the parameters using rugarch</h4>
 <pre class="r"><code>rugarch_test = f_test_rugarch(log_returns_sp500,0.95)</code></pre>
-<pre><code>## Loading required package: parallel</code></pre>
-<pre><code>## 
-## Attaching package: &#39;rugarch&#39;</code></pre>
-<pre><code>## The following object is masked from &#39;package:stats&#39;:
-## 
-##     sigma</code></pre>
 <pre><code>## VaR and Params from rugarch:
 ## VaR: -0.01718807 
 ## Parameters: 1.700554e-06 0.08983627 0.8976026</code></pre>

@@ -2,8 +2,7 @@ library("here")
 library("xts")
 library("PerformanceAnalytics")
 source(here("Code/f_forecast_var.R"))
-source(here("Code/functions.R"))
-source(here("Tests/UGarchLib.R"))
+source(here("Code/UGarchLib.R"))
 
 # Load the data and filter the data
 index_prices = get(load(here("Data/indices.rda")))
