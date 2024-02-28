@@ -260,7 +260,8 @@ rda=get(load(here("Outputs/backtest_results.rda")))
 rda
 ```
 
-# plot rda
+# Plot rda
+
 ```{r rda-plot, echo=TRUE}
 plot(rda$SP500, type = 'l', col = 'red', xlab = "Window", ylab = "Returns",
      main = "Backtest Results for S&P 500", ylim = c(-0.1,0.1), xlim = c(0,1000))
