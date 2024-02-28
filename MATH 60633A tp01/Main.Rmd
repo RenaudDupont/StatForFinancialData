@@ -89,16 +89,20 @@ xts_conditional_variances <- xts(VaR_forecast_sp500$ConditionalVariances, order.
 plot(sqrt(xts_conditional_variances), type="l",
      xlab = "Garch Standard Deviation", 
      main="Garch Standard Deviation by date", col="blue")
+```
 
+#### 3) Plot the objective function values
 
+The objective function values are plotted to show the convergence of the optimization algorithm used to estimate the Garch parameters.
 
+```{r var-forecast-plot-objective, echo=TRUE}
 plot(store$objective_values, type = 'l', 
-     xlab = "Iteration", ylab = "Objective Function Value",
+     xlab = "Iterations", ylab = "Objective Function Value",
      main = "Objective Function Value Over Iterations")
 ```
 
 
-#### 3) Estimating the VaR and the parameters using rugarch
+#### 4) Estimating the VaR and the parameters using rugarch
 
 The `f_test_rugarch` function is used to estimate the VaR and the parameters using the `rugarch` package to use it as a benchmark our estimation. The function returns the VaR and the parameters of rugarch.
 
@@ -108,7 +112,7 @@ cat("VaR and Params from implemented garch:\nVaR:", VaR_forecast_sp500$VaR, "\nP
     (VaR_forecast_sp500$GARCH_param), "\n")
 ```
 
-#### 4) Plot the histogram of the log returns and the VaR forecast
+#### 5) Plot the histogram of the log returns and the VaR forecast
 
 The histogram of the log-returns for the S&P 500 index is plotted, and the VaR forecast from the implemented Garch model and the VaR from the `rugarch` package are added to the plot. The VaR from the data is also included for comparison.
 
@@ -121,7 +125,7 @@ legend("topright", legend=c("VaR from RuGarch","VaR from Implemented Garch", "Va
        col = c("blue","red", "black"), lty = 1:1, cex = 0.8)
 ```
 
-#### 5) Show the result
+#### 6) Show the result
 
 The VaR forecast from the data, Garch, and Rugarch are printed for comparison.
 
@@ -239,4 +243,25 @@ addLegend("topright", on = 1, col = c("blue", "red"),
 message = paste("The percentage of time that the returns are below the VaR forecast is:", percentageBelowVaR, "%")
 mtext(message, side = 1, line = -2)
 dev.off()
+```
+
+#### 5) Save the results of the backtest in a `rda` file
+
+The results of the backtest are saved in an `.rda` file.
+
+```{r rolling-window-save, echo=TRUE}
+backtest_results = data.frame(returns = returns, VaR_forecast = VaR_forecast_sp500_vector)
+save(backtest_results, file = here("Outputs/backtest_results.rda"))
+```
+
+# Load the results of the backtest
+```{r rda, echo=TRUE}
+rda=get(load(here("Outputs/backtest_results.rda")))
+rda
+```
+
+# plot rda
+```{r rda-plot, echo=TRUE}
+plot(rda$SP500, type = 'l', col = 'red', xlab = "Window", ylab = "Returns",
+     main = "Backtest Results for S&P 500", ylim = c(-0.1,0.1), xlim = c(0,1000))
 ```
