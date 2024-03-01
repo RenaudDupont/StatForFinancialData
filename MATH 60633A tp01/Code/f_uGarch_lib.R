@@ -3,7 +3,7 @@ library("here")
 f_test_rugarch <- function(log_returns,level)
 {
   # Load the rugarch package
-  library(rugarch)
+  library("rugarch")
   #Y is the vector of log-returns
   # Specify the GARCH(1,1) model with normal distribution for the errors
   spec <- ugarchspec(variance.model = list(garchOrder = c(1,1)), 
