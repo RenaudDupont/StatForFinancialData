@@ -1,6 +1,5 @@
-
 ---
-title: "Detailed Analysis of VaR using GARCH"
+title: "Detailed Analysis of VaR using GARCH(1,1)"
 author: "Renaud Dupont, Bilal Oukal"
 date: "2024-03-03"
 output: html_document
@@ -21,8 +20,7 @@ The script starts by loading necessary libraries:
 Additionally, it sources additional R scripts containing custom functions essential for the analysis:
 
 - `f_forecast_var.R`: Contains the function for forecasting VaR.
-- `functions.R`:  includes functions to calculate the log return.
-- `UGarchLib.R`: Contains functions related to GARCH.
+- `f_uGarch_lib.R`: Contains functions related to testing GARCH.
 
 
 ```{r libraries, echo=TRUE, results="hide", warning=FALSE, message=FALSE}
@@ -30,7 +28,7 @@ library("here")
 library("xts")
 library("PerformanceAnalytics")
 source(here("Code/f_forecast_var.R"))
-source(here("Code/UGarchLib.R"))
+source(here("Code/f_uGarch_lib.R"))
 ```
 
 ### Data Loading and Filtering
@@ -84,8 +82,6 @@ The conditional variances are plotted as a time series for the S&P 500 index, an
 dates_vector <- index(index_prices)
 xts_conditional_variances <- xts(VaR_forecast_sp500$ConditionalVariances, order.by = as.Date(dates_vector)+1)
 
-
-
 plot(sqrt(xts_conditional_variances), type="l",
      xlab = "Garch Standard Deviation", 
      main="Garch Standard Deviation by date", col="blue")
@@ -135,7 +131,6 @@ cat("VaR from data SP500", "\n", quantile(log_returns$SP500,0.05), "\n")
 cat("Var from Garch", "\n", VaR_forecast_sp500$VaR_Forecast, "\n")
 
 cat("VaR from Rugarch", "\n", rugarch_test$VaR, "\n")
-
 ```
 
 As we can see from the results, the VaR forecast from the implemented Garch model is close to the VaR from the `rugarch` package, and both are close to the VaR from the data.
@@ -219,12 +214,12 @@ VaR_forecast_sp500_xts <- xts(VaR_forecast_sp500_vector, order.by = dates)
 
 #### 4) Plot the VaR forecast and the log-returns and output the graph
 
-The VaR forecast and the log-returns for the S&P 500 index are plotted, and the graph is saved as a `png` file in a new folder created called `Output`.
+The VaR forecast and the log-returns for the S&P 500 index are plotted, and the graph is saved as a `png` file in the folder called `Outputs`.
 
 ```{r rolling-window-plot, echo=TRUE, warning=FALSE, message=FALSE}
 library("quantmod")
 
-png(here("Outputs/VaR_forecast_sp500.png"))
+png(here("Outputs/VaR_forecast_sp500.png"), width = 1920, height =1080 )
 
 plot.xts(VaR_forecast_sp500_xts, type = 'l', col = 'blue', xlab = "Window", ylab = "VaR Forecast",
      main = "VaR Forecast for S&P 500")
@@ -232,7 +227,7 @@ plot.xts(VaR_forecast_sp500_xts, type = 'l', col = 'blue', xlab = "Window", ylab
 returns=log_returns_sp500[window_size:(window_size+number_of_windows-1)]
 daysBelowVaR = sum(returns < VaR_forecast_sp500_vector)
 percentageBelowVaR = daysBelowVaR/number_of_windows *100
-cat("The percentage of time that the returns are below the VaR forecast is:", percentageBelowVaR, "\n")
+cat("The percentage of time that the returns are below the VaR forecast is:", percentageBelowVaR, "%", "\n")
 
 lines(returns, col = 'red')
 
@@ -252,17 +247,4 @@ The results of the backtest are saved in an `.rda` file.
 ```{r rolling-window-save, echo=TRUE}
 backtest_results = data.frame(returns = returns, VaR_forecast = VaR_forecast_sp500_vector)
 save(backtest_results, file = here("Outputs/backtest_results.rda"))
-```
-
-# Load the results of the backtest
-```{r rda, echo=TRUE}
-rda=get(load(here("Outputs/backtest_results.rda")))
-rda
-```
-
-# Plot rda
-
-```{r rda-plot, echo=TRUE}
-plot(rda$SP500, type = 'l', col = 'red', xlab = "Window", ylab = "Returns",
-     main = "Backtest Results for S&P 500", ylim = c(-0.1,0.1), xlim = c(0,1000))
 ```
